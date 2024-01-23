@@ -34,27 +34,23 @@ class NuulySearchService {
 
         // Replace the escaped double quotes
         const unescapedJsonString = jsonString.replace(/\\"/g, '"');
+        const trimmedJsonString = unescapedJsonString.substring(unescapedJsonString.indexOf("\"choices\":["), unescapedJsonString.indexOf(",\"facets\""));
+        const cleanString = trimmedJsonString.replace(/\\/g, '');
 
-        // Parse the JSON string
-        try {
-            const initialStateObject: JSON = JSON.parse(unescapedJsonString);
-            console.log('Parsed JSON:', initialStateObject);
-            return initialStateObject;
-        } catch (error) {
-            console.error('Error parsing JSON:', error);
-            return JSON.parse("");
-        }
+        // Parse as JSON
+        const jsonObject = JSON.parse(`{${cleanString}}`);
+        return jsonObject
     }
 }
 
 export default class DataService {
-    static async fetchDataWithInitialState(url: string): Promise<string | null> {
+    static async fetchDataWithInitialState(url: string): Promise<JSON | null> {
         try {
             const html = await NuulySearchService.fetchHtml(url);
             const initialStateLine = NuulySearchService.extractInitialStateLine(html);
-            //const responseJson = NuulySearchService.parseJsonFromInitialState(initialStateLine);
+            const responseJson = NuulySearchService.parseJsonFromInitialState(initialStateLine);
 
-            return initialStateLine;
+            return responseJson;
         } catch (error) {
             console.error('Error fetching data:', error);
             return null;

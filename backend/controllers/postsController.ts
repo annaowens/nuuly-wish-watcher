@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
 import DataService from '../services/nuulySearchService'
+import { SearchResponse } from '../models/searchResponse';
 
 const postsController = {
   getAllPosts: (req: Request, res: Response) => {
@@ -35,20 +36,36 @@ const postsController = {
   getSearchResults: async (req: Request, res: Response) => {
     const searchQuery = req.params.searchQuery;
     try {
-        // Make an API call using axios
-        const response = await DataService.fetchDataWithInitialState("twist-halter-maxi-dress").then((initialStateLine) => {
-          return initialStateLine;
-        });
+      // Call nuuly APIs
+      const response = await DataService.fetchDataWithInitialState("twist-halter-maxi-dress");
 
-        console.log(response);
+      // Convert JSON to SearchResponse type
+      const searchResponse: SearchResponse | null = convertJsonToSearchResponse(response);
 
-        // Process the external data or send it to the client
-        res.json({ response });
-      } catch (error) {
-        console.error('Error making external API call:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+      if (searchResponse !== null) {
+        // Handle the case where conversion was successful
+        res.status(200).json(searchResponse);
+      } else {
+        // Handle the case where jsonData was null
+        res.status(400).json({ error: 'Invalid JSON data' });
       }
+    } catch (error) {
+      console.error('Error making external API call:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
   }
 };
+
+function convertJsonToSearchResponse(jsonData: JSON | null): SearchResponse | null {
+  // Check if jsonData is not null
+  if (jsonData === null) {
+    return null;
+  }
+
+  // Directly cast the non-null JSON object to SearchResponse type
+  const searchResponse: SearchResponse = jsonData as unknown as SearchResponse;
+
+  return searchResponse;
+}
 
 export default postsController;
