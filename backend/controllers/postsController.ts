@@ -1,8 +1,7 @@
 // backend/controllers/postsController.ts
-import axios from 'axios';
 import { Request, Response } from 'express';
 import DataService from '../services/nuulySearchService'
-import { SearchResponse } from '../models/searchResponse';
+import InventorySearchResult from '../../shared/types/searchResponse'
 
 const postsController = {
   getAllPosts: (req: Request, res: Response) => {
@@ -40,7 +39,7 @@ const postsController = {
       const response = await DataService.fetchDataWithInitialState("twist-halter-maxi-dress");
 
       // Convert JSON to SearchResponse type
-      const searchResponse: SearchResponse | null = convertJsonToSearchResponse(response);
+      const searchResponse: InventorySearchResult | null = convertJsonToSearchResponse(response);
 
       if (searchResponse !== null) {
         // Handle the case where conversion was successful
@@ -56,14 +55,14 @@ const postsController = {
   }
 };
 
-function convertJsonToSearchResponse(jsonData: JSON | null): SearchResponse | null {
+function convertJsonToSearchResponse(jsonData: JSON | null): InventorySearchResult | null {
   // Check if jsonData is not null
   if (jsonData === null) {
     return null;
   }
 
   // Directly cast the non-null JSON object to SearchResponse type
-  const searchResponse: SearchResponse = jsonData as unknown as SearchResponse;
+  const searchResponse: InventorySearchResult = jsonData as unknown as InventorySearchResult;
 
   return searchResponse;
 }

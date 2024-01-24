@@ -1,4 +1,4 @@
-export interface SearchResponse {
+export default interface InventorySearchResult {
     choices: Choice[]
 }
 

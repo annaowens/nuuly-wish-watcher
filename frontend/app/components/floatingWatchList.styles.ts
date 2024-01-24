@@ -1,42 +1,37 @@
-// SquareComponent.styles.ts
+// floatingWatchList.styles.ts
 import { CSSProperties } from 'react';
-import classNames from 'classnames';
+
 
 export const containerClass = 'square-container';
 export const headerClass = 'square-header';
 export const subTextClass = 'square-subtext';
 export const listClass = 'square-list';
 export const buttonContainerClass = 'square-button-container';
-export const buttonClass = 'square-button';
 
-export const containerStyles: CSSProperties = {
-  backgroundColor: '#c2d4b6',
+export const floatingWatchListStyles: CSSProperties = {
+  backgroundColor: '#DAB9AE',
   borderRadius: '10px',
   padding: '20px',
-  border: '2px solid #a9a9a9',
-  minHeight: '200px',
+  border: '1px solid #8E403A',
   display: 'flex',
+  right: '0',
   flexDirection: 'column',
-  position: 'relative',
+  position: 'fixed',
+  bottom: '0',
+  width: '350px',
+  overflow: 'hidden',
 };
 
 export const headerStyles: CSSProperties = {
-  color: '#006400',
+  color: '#8E403A',
   fontWeight: 'bold',
   fontSize: '1.5rem',
-};
-
-export const subTextStyles: CSSProperties = {
-  color: '#006400',
-  fontSize: '1rem',
-  marginBottom: '20px',
 };
 
 export const listStyles: CSSProperties = {
   flex: '1',
   overflowY: 'auto',
   marginBottom: '20px',
-  marginLeft: '10px',
   textAlign: 'left', // Align text to the left
 };
 
@@ -48,11 +43,10 @@ export const buttonContainerStyles: CSSProperties = {
 };
 
 export const buttonStyles: CSSProperties = {
-  marginRight: '10px',
+  marginLeft: '10px',
+  backgroundColor: '#8E403A'
 };
 
-export const watchNowButtonStyles: CSSProperties = {
-  borderColor: '#8B6508', // Dark yellow outline color
-  color: '#FFD700', // Light mustard yellow text color
-  backgroundColor: 'transparent', // Transparent background
-};
+export const eyeIconStyles: CSSProperties = {
+  color: '#DAB9AE',
+}
