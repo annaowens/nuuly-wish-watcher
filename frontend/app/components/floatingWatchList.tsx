@@ -4,10 +4,11 @@ import Button from 'react-bootstrap/Button';
 import * as styles from './floatingWatchList.styles';
 import { Col, Row } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { CaretDown, CaretUp, Eye } from 'react-bootstrap-icons';
+import { Eye, ChevronCompactUp, ChevronCompactDown } from 'react-bootstrap-icons';
+import { Product } from '../../../shared/types/searchResponse';
 
 interface WatchListProps {
-    watchedItems: WatchedItem[];
+    watchedItems: Product[];
 }
 
 const FloatingWatchList: React.FC<WatchListProps> = ({
@@ -31,16 +32,16 @@ const FloatingWatchList: React.FC<WatchListProps> = ({
                             style={{ background: 'none', border: 'none' }}
                             onClick={toggleContainer}>
                             {expanded ?
-                                <CaretDown color='red' size={30} />
+                                <ChevronCompactDown style={styles.iconStyles} size={30} />
                                 :
-                                <CaretUp color='red' size={30} />}
+                                <ChevronCompactUp style={styles.iconStyles} size={30} />}
                         </Button>
                     </Col>
                     {expanded && (
                         <Row style={{ paddingTop: 10 }}>
                             <ul style={styles.listStyles}>
                                 {watchedItems.map((item) => (
-                                    <li key={item.id}>{item.title}: {item.content}</li>
+                                    <li key={item.productSlug}>{item.displayName}</li>
                                 ))}
                             </ul>
                         </Row>
@@ -59,8 +60,7 @@ const FloatingWatchList: React.FC<WatchListProps> = ({
                                     style={styles.buttonStyles}
                                     variant="primary">
                                     <div style={{ display: 'flex', verticalAlign: 'center' }}>
-
-                                        <Eye style={styles.eyeIconStyles} size={15} />
+                                        <Eye style={styles.iconStyles} size={15} />
                                         watch
                                     </div>
                                 </Button>

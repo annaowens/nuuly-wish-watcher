@@ -1,7 +1,6 @@
 // floatingWatchList.styles.ts
 import { CSSProperties } from 'react';
 
-
 export const containerClass = 'square-container';
 export const headerClass = 'square-header';
 export const subTextClass = 'square-subtext';
@@ -23,9 +22,11 @@ export const floatingWatchListStyles: CSSProperties = {
 };
 
 export const headerStyles: CSSProperties = {
-  color: '#8E403A',
-  fontWeight: 'bold',
-  fontSize: '1.5rem',
+  color: '#A04100',
+  fontFamily: "Ginto Nord, sans-serif",
+  fontSize: "1.5rem",
+  fontWeight: 800,
+  letterSpacing: "0.1px",
 };
 
 export const listStyles: CSSProperties = {
@@ -44,9 +45,9 @@ export const buttonContainerStyles: CSSProperties = {
 
 export const buttonStyles: CSSProperties = {
   marginLeft: '10px',
-  backgroundColor: '#8E403A'
+  backgroundColor: '#A04100'
 };
 
-export const eyeIconStyles: CSSProperties = {
-  color: '#DAB9AE',
+export const iconStyles: CSSProperties = {
+  color: '#A04100',
 }

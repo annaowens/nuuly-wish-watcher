@@ -1,5 +1,5 @@
 import React from 'react';
-import { SizeGroup, IncludedSku as Sku } from '../../../shared/types/searchResponse';
+import { SizeGroup, IncludedSku as Sku } from '../../../shared/types/productSizeInventory';
 import { Button, Col, Row } from 'react-bootstrap';
 
 interface SizeGroupProps {
