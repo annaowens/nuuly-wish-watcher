@@ -1,59 +1,57 @@
-export default interface InventorySearchResult {
-    choices: Choice[]
+export default interface SearchResponse {
+    products: Product[]
+    pagination: Pagination
+    filterGroups: FilterGroup[]
+    sortOptions: SortOption[]
+    redirectUrl: string
+    responseId: string
 }
 
-export interface Choice {
+export interface Product {
+    displayName: string
+    productSlug: string
+    images: string[]
+    brand: string
+    colorDisplayName: string
     choiceId: string
-    imageUrls: string[]
-    color: Color
-    sizeGroups: SizeGroup[]
+    colorCode: string
+    sizeId: string
+    sizeDisplayName: string
+    skuCode: string
+    skuId: string
+    styleNumber: string
+    merchandiseClass: string
+    msrpValue: number
+    removeForLegalReasons: boolean
+    availableToRent: boolean
     previouslyRented: any
     inCloset: boolean
     inBox: boolean
-    colorFacet: ColorFacet
+    overallRatingCount: number
+    overallRatingAverage: number
+    vendorBrands: string[]
+    isAvailable: boolean
+    availabilityStatus: string
+    isVintage: boolean
     productsRelatedToColor: any[]
 }
 
-export interface Color {
-    code: string
+export interface Pagination {
+    totalPages: number
+    itemsPerPage: number
+    itemsOnPage: number
+    pageNumber: number
+    totalItems: number
+    totalItemsBeforeFilters: number
+}
+
+export interface FilterGroup {
     displayName: string
-    hexCode: string
-    imageUrl: string
-}
-
-export interface SizeGroup {
-    groupCode: string
-    displayName: string
-    includedSkus: IncludedSku[]
-}
-
-export interface IncludedSku {
-    skuId: string
-    skuCode: string
-    size: Size
-    sizeFilters: SizeFilter[]
-    availableInventory: number
-    isAvailable: boolean
-}
-
-export interface Size {
-    code: string
-    displayName: string
-}
-
-export interface SizeFilter {
-    id: string
     name: string
+    filterValues: string[]
 }
 
-export interface ColorFacet {
-    colorways: Colorway[]
-    colorId: string
-}
-
-export interface Colorway {
-    hexColor: string
+export interface SortOption {
+    displayName: string
     name: string
-    mappingAlias: string
-    swatchURL: string
 }

@@ -2,16 +2,23 @@
 import axios from 'axios';
 import { load, Element } from 'cheerio';
 
-const nuulySearchUrlBase = "https://www.nuuly.com/rent/products/";
+const nuulyProductUrlBase = "https://www.nuuly.com/rent/products/";
+const nuulySearchUrlBase = "https://www.nuuly.com/api/catalog/search?q=";
+const nuulySearchSlimParams = "&pageNumber=1&itemsPerPage=10"
 
 class NuulySearchService {
-    static async fetchHtml(searchQuery: string): Promise<string> {
-        const response = await axios.get(nuulySearchUrlBase + searchQuery);
-        console.log('Initial State Line:', nuulySearchUrlBase + searchQuery);
+    static async fetchHtml(productSlug: string): Promise<string> {
+        const response = await axios.get(nuulyProductUrlBase + productSlug);
         return response.data;
     }
 
-    static extractInitialStateLine(html: string): string {
+    static async fetchJson(searchQuery: string): Promise<JSON> {
+        searchQuery = "haltar%20dress"
+        const response = await axios.get(nuulySearchUrlBase + searchQuery + nuulySearchSlimParams);
+        return response.data;
+    }
+
+    static extractRelevantDataFromHtml(html: string): string {
         const $ = load(html);
 
         // Find the <script> tag containing "initialState: JSON.parse("
@@ -44,13 +51,22 @@ class NuulySearchService {
 }
 
 export default class DataService {
-    static async fetchDataWithInitialState(url: string): Promise<JSON | null> {
+    static async fetchSSRData(url: string): Promise<JSON | null> {
         try {
             const html = await NuulySearchService.fetchHtml(url);
-            const initialStateLine = NuulySearchService.extractInitialStateLine(html);
+            const initialStateLine = NuulySearchService.extractRelevantDataFromHtml(html);
             const responseJson = NuulySearchService.parseJsonFromInitialState(initialStateLine);
 
             return responseJson;
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return null;
+        }
+    }
+
+    static async fetchRegularAPIResponseData(url: string): Promise<JSON | null > {
+        try {
+            return await NuulySearchService.fetchJson(url);
         } catch (error) {
             console.error('Error fetching data:', error);
             return null;
