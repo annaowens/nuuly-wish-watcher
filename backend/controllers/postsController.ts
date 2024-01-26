@@ -32,7 +32,7 @@ const postsController = {
     const searchQuery = req.params.searchQuery;
     try {
       // Call nuuly APIs
-      const response = await DataService.fetchSSRData("twist-halter-maxi-dress");
+      const response = await DataService.fetchSSRData("cozy-cloud-puffer-jacket?color=023");
 
       // Convert JSON to SearchResponse type
       const searchResponse: ProductSizeInventory | null = convertJsonToProductSizeInventory(response);

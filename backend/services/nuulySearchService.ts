@@ -4,7 +4,7 @@ import { load, Element } from 'cheerio';
 
 const nuulyProductUrlBase = "https://www.nuuly.com/rent/products/";
 const nuulySearchUrlBase = "https://www.nuuly.com/api/catalog/search?q=";
-const nuulySearchSlimParams = "&pageNumber=1&itemsPerPage=10"
+const nuulySearchSlimParams = "&pageNumber=1&itemsPerPage=28"
 
 class NuulySearchService {
     static async fetchHtml(productSlug: string): Promise<string> {

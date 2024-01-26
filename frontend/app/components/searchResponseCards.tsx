@@ -27,25 +27,20 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
 
   return (
     <Container>
-      <Row>
+      <Row xs={1} md={4} className="g-4">
         {searchResponse.map((product: Product) => (
-          <Col key={product.skuId} md={12}>
-            <Card style={{ marginBottom: '20px' }}>
+          <Col key={product.skuId}>
+            <Card>
               <Card.Body>
                 <Row>
-                  <Col md={2}>
                   <Image src={product.images[0]} fluid />
+                </Row>
+                <Row style={{ textAlign: 'left', paddingTop: 15 }}>
+                  <Col md={9} >
+                    <Card.Title style={{ textAlign: 'left', fontSize: 17 }}>{product.displayName}</Card.Title>
                   </Col>
-                  <Col md={10}>
-                    <Row>
-                    <Card.Title style={{textAlign:'left', padding:10}}>{product.displayName}</Card.Title>
-                    </Row>
-                    {/* <Row>
-                    <SizeChart sizeGroups={searchResponse[0].sizeGroups}></SizeChart>
-                    </Row> */}
-                    <WatchButton
-                    item={product}
-                    onButtonClick={addItemToWatchList} />
+                  <Col md={3} style={{paddingLeft:0 }}>
+                    <WatchButton item={product} onButtonClick={addItemToWatchList} />
                   </Col>
                 </Row>
               </Card.Body>
@@ -54,6 +49,7 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
         ))}
       </Row>
     </Container>
+
   );
 };
 
