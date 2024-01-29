@@ -6,13 +6,13 @@ import { Container, Row, Col } from 'react-bootstrap';
 import SearchBar from './searchBar';
 import InventoryResultList from './searchResponseCards';
 import ProductSizeInventory from '../../../shared/types/productSizeInventory'
-import SearchResponse from '../../../shared/types/searchResponse'
+import SearchResponse, { Product } from '../../../shared/types/searchResponse'
 import FloatingWatchList from './floatingWatchList';
 import LoadingSpinner from './loadingSpinner';
 import * as styles from './landingPage.styles';
 
 const LandingPage: React.FC = () => {
-  const [watchedItems, setWatchedItems] = useState<WatchedItem[]>([]);
+  const [watchedItems, setWatchedItems] = useState<Product[]>([]);
   const [productSizeInventory, setProductSizeInventory] = useState<ProductSizeInventory>();
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
   const [loading, setLoading] = useState(false);
@@ -21,6 +21,10 @@ const LandingPage: React.FC = () => {
     const addItemToWatchList = (newData: any) => {
       setWatchedItems([...watchedItems, newData]);
     };
+
+    const clearWatchList = () => {
+      setWatchedItems([]);
+    }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,7 +89,7 @@ const LandingPage: React.FC = () => {
           </Col>
         </Row>
       </Container>
-      <FloatingWatchList watchedItems={watchedItems}></FloatingWatchList>
+      <FloatingWatchList watchedItems={watchedItems} clearWatchList={clearWatchList}></FloatingWatchList>
     </div>
   );
 };

@@ -1,16 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import SizeChart from './sizeChart';
 import Image from 'react-bootstrap/Image'
-import { Choice } from '../../../shared/types/productSizeInventory';
 import { Product } from '../../../shared/types/searchResponse';
-import { Eye } from 'react-bootstrap-icons';
-import { iconStyles } from './floatingWatchList.styles';
-import { Button } from 'react-bootstrap';
 import WatchButton from './watchButton';
+import SizeSelectorPopup from './sizeSelectorPopup';
+import { Button } from 'react-bootstrap';
 
 interface SearchResponseCardsProps {
   searchResponse: Product[];
@@ -20,9 +17,19 @@ interface SearchResponseCardsProps {
 const SearchResponseCards = (props: SearchResponseCardsProps) => {
 
   const searchResponse = props.searchResponse;
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+  };
+
 
   const addItemToWatchList = (itemToAdd: Product) => {
     props.addItemToWatchList(itemToAdd);
+  }
+
+  const handleOpenPopup = () => {
+    setShowPopup(true);
   }
 
   return (
@@ -39,13 +46,21 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
                   <Col md={9} >
                     <Card.Title style={{ textAlign: 'left', fontSize: 17 }}>{product.displayName}</Card.Title>
                   </Col>
-                  <Col md={3} style={{paddingLeft:0 }}>
-                    <WatchButton item={product} onButtonClick={addItemToWatchList} />
+                  <Col md={3} style={{ paddingLeft: 0 }}>
+                    <Button
+                    onClick={handleOpenPopup}/>
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
+            {product.displayName}
+            <SizeSelectorPopup
+                      show={showPopup}
+                      onClose={handleClosePopup}
+                      onAdd={addItemToWatchList}
+                      selectedItem={product} />
           </Col>
+
         ))}
       </Row>
     </Container>

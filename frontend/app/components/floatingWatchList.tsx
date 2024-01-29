@@ -6,15 +6,22 @@ import { Col, Row } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { Eye, ChevronCompactUp, ChevronCompactDown } from 'react-bootstrap-icons';
 import { Product } from '../../../shared/types/searchResponse';
+import { watch } from 'fs';
 
 interface WatchListProps {
     watchedItems: Product[];
+    clearWatchList: () => void;
 }
 
 const FloatingWatchList: React.FC<WatchListProps> = ({
-    watchedItems
+    watchedItems,
+    clearWatchList
 }) => {
     const [expanded, setExpanded] = useState(true);
+
+    const handleClearButtonClick = () => {
+        clearWatchList();
+    }
 
     const toggleContainer = () => {
         setExpanded((prevExpanded) => !prevExpanded);
@@ -53,6 +60,7 @@ const FloatingWatchList: React.FC<WatchListProps> = ({
                             <div style={styles.buttonContainerStyles}>
                                 <Button
                                     style={styles.buttonStyles}
+                                    onClick={handleClearButtonClick}
                                     variant="outline-danger">
                                     clear
                                 </Button>
