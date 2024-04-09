@@ -17,14 +17,14 @@ const LandingPage: React.FC = () => {
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
   const [loading, setLoading] = useState(false);
 
-    // Function to update the state
-    const addItemToWatchList = (newData: any) => {
-      setWatchedItems([...watchedItems, newData]);
-    };
+  // Function to update the state
+  const addItemToWatchList = (newItem: Product) => {
+    setWatchedItems([...watchedItems, newItem]);
+  };
 
-    const clearWatchList = () => {
-      setWatchedItems([]);
-    }
+  const clearWatchList = () => {
+    setWatchedItems([]);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,7 +64,7 @@ const LandingPage: React.FC = () => {
       <Container style={styles.landingPageStyles} fluid className="pt-24 justify-content-center align-items-center">
         <Row className="justify-content-center">
           <Col md={9} className="text-center">
-            <h1 style={styles.headerTextStyles} className="display-1">nuuly wish watcher</h1>
+            <h1 style={styles.headerTextStyles} className="display-1 mb-3">nuuly wish watcher</h1>
             <h2 style={styles.subtextStyles}>get notified when your nuuly items are in stock</h2>
           </Col>
         </Row>
@@ -76,8 +76,7 @@ const LandingPage: React.FC = () => {
                 {loading ? (
                   <LoadingSpinner />
                 ) : (
-                  // Your content to display when not loading
-                  searchResponse?.products && 
+                  searchResponse?.products &&
                   <InventoryResultList
                     // searchResponse={productSizeInventory?.choices || []}
                     searchResponse={searchResponse?.products || []}

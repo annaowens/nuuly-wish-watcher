@@ -8,6 +8,7 @@ import { Product } from '../../../shared/types/searchResponse';
 import WatchButton from './watchButton';
 import SizeSelectorPopup from './sizeSelectorPopup';
 import { Button } from 'react-bootstrap';
+import EndOfResultSuggestion from './endOfResultSuggestion';
 
 interface SearchResponseCardsProps {
   searchResponse: Product[];
@@ -18,18 +19,19 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
 
   const searchResponse = props.searchResponse;
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<Product | null>(null);
+
+  const handleOpenPopup = (selectedItem: Product) => {
+    setSelectedItem(selectedItem);
+    setShowPopup(true);
+  }
 
   const handleClosePopup = () => {
     setShowPopup(false);
   };
 
-
-  const addItemToWatchList = (itemToAdd: Product) => {
-    props.addItemToWatchList(itemToAdd);
-  }
-
-  const handleOpenPopup = () => {
-    setShowPopup(true);
+  const addItemToWatchList = () => {
+    if(selectedItem) props.addItemToWatchList(selectedItem);
   }
 
   return (
@@ -48,21 +50,18 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
                   </Col>
                   <Col md={3} style={{ paddingLeft: 0 }}>
                     <Button
-                    onClick={handleOpenPopup}/>
+                      onClick={() => handleOpenPopup(product)} />
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
-            {product.displayName}
-            <SizeSelectorPopup
-                      show={showPopup}
-                      onClose={handleClosePopup}
-                      onAdd={addItemToWatchList}
-                      selectedItem={product} />
           </Col>
-
         ))}
       </Row>
+      <EndOfResultSuggestion />
+      {selectedItem && (
+        <SizeSelectorPopup show={showPopup} onClose={handleClosePopup} onAdd={addItemToWatchList} selectedItem={selectedItem} />
+      )}
     </Container>
 
   );
