@@ -13,7 +13,6 @@ import * as styles from './landingPage.styles';
 
 const LandingPage: React.FC = () => {
   const [watchedItems, setWatchedItems] = useState<Product[]>([]);
-  const [productSizeInventory, setProductSizeInventory] = useState<ProductSizeInventory>();
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
   const [loading, setLoading] = useState(false);
 
@@ -35,11 +34,6 @@ const LandingPage: React.FC = () => {
           .then((response) => response.json())
           .then((data) => setSearchResponse(data))
           .catch((error) => console.error('Error fetching data:', error));
-
-        await fetch('http://localhost:3001/posts/availableSizes/TEST')
-          .then((response) => response.json())
-          .then((data) => setProductSizeInventory(data))
-          .catch((error) => console.error('Error fetching data:', error));
       } catch (error) {
         // Handle error
       } finally {
@@ -54,7 +48,6 @@ const LandingPage: React.FC = () => {
     if (searchQuery == "") {
       // clear search
     } else {
-      setProductSizeInventory(productSizeInventory);
       setSearchResponse(searchResponse);
     }
   };
@@ -78,7 +71,6 @@ const LandingPage: React.FC = () => {
                 ) : (
                   searchResponse?.products &&
                   <InventoryResultList
-                    // searchResponse={productSizeInventory?.choices || []}
                     searchResponse={searchResponse?.products || []}
                     addItemToWatchList={addItemToWatchList}
                   />

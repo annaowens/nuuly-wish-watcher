@@ -6,17 +6,22 @@ import { Eye } from 'react-bootstrap-icons';
 import { watchButtonStyles } from './watchButton.styles';
 
 interface WatchButtonProps {
-  onButtonClick: (item: Product) => void;
+  item: Product;
+  onButtonClick: (itemId: Product) => void;
 }
 
-const WatchButton: React.FC<WatchButtonProps> = ({ onButtonClick }) => {
+const WatchButton: React.FC<WatchButtonProps> = ({ item, onButtonClick }) => {
+
+  const handleWatchClick = () => {
+    onButtonClick(item);
+  };
+
   return (
     <div>
-      <Button onClick={() => onButtonClick} style={watchButtonStyles}>
+      <Button onClick={handleWatchClick} style={watchButtonStyles}>
         <Eye size={20} />
       </Button>
     </div>
   );
 };
-
 export default WatchButton;

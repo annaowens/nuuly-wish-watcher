@@ -43,7 +43,7 @@ interface SizeChartProps {
 
 const SizeChart: React.FC<SizeChartProps> = ({ sizeGroups }) => (
     <div>
-        {sizeGroups.map((group) => (
+        {sizeGroups.map((group: SizeGroup) => (
             <SizeGroup key={group.groupCode} group={group} />
         ))}
     </div>
