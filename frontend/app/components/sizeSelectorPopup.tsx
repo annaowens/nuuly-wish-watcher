@@ -5,6 +5,7 @@ import { Product } from '../../../shared/types/searchResponse';
 import SizeChart from './sizeChart';
 import ProductSizeInventory, { Choice, Size, SizeGroup, IncludedSku } from '../../../shared/types/productSizeInventory';
 import { UniqueSelectionValue } from '../../../shared/types/uniqueSelectionValue';
+import LoadingSpinner from './loadingSpinner';
 
 interface SizeSelectorPopupProps {
   show: boolean;
@@ -51,14 +52,16 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
         <Modal.Title>select your size(s) for {selectedItem.displayName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
           productSizeInventory?.choices.map((colorOption: Choice) => (
             <div>
               <p>{colorOption.color.displayName.toLocaleLowerCase()}</p>
               <SizeChart color={colorOption} sizeGroups={colorOption.sizeGroups} handleAddToSelection={handleAddToSelection} />
             </div>
           ))
-        }
+        )}
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={handleClearSelection}>Clear</Button>
@@ -71,7 +74,8 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
               {value.skuDisplayName}
             </div>
           ))}
-        </div>      </Modal.Footer>
+        </div>
+      </Modal.Footer>
     </Modal>
   );
 };
