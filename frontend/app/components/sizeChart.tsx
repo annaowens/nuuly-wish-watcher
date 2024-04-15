@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Choice, SizeGroup, IncludedSku as Sku } from '../../../shared/types/productSizeInventory';
 import { Button, Col, Row } from 'react-bootstrap';
-import { UniqueSelectionValue } from '../../../shared/types/uniqueSelectionValue';
+import { buttonStyles } from './common.styles';
 
 interface SizeGroupProps {
     group: SizeGroup;
@@ -43,11 +43,16 @@ const SizeSku: React.FC<SizeSkuProps> = ({ sku, onSelect }) => {
         <Button
             variant='outline-primary'
             size='sm'
-            style={{ margin: 10, backgroundColor: getAvailabilityColoring(sku) }}
+            style={{
+                ...buttonStyles, 
+                margin: '10', 
+                // backgroundColor: getAvailabilityColoring(sku)
+            }}
             onClick={handleClick}
         >
             <p>
-                {sku.size.displayName} - {sku.availableInventory}
+                {sku.size.displayName} 
+                {/* {sku.availableInventory} */}
             </p>
         </Button>
     );

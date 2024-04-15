@@ -15,7 +15,7 @@ import WatchListCart from './watchListCart';
 import WatchedItem from '../../../shared/types/watchList';
 import SearchResponseCards from './searchResponseCards';
 
-const LandingPage: React.FC = () => {
+const FAQPage: React.FC = () => {
   const [watchedItems, setWatchedItems] = useState<WatchedItem[]>([]);
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
   const [loading, setLoading] = useState(false);
@@ -69,7 +69,7 @@ const LandingPage: React.FC = () => {
       <Container style={styles.landingPageStyles} fluid className="pt-24 justify-content-center align-items-center">
         <Row className="justify-content-center">
           <Col md={9} className="text-center">
-            <h1 style={styles.headerTextStyles} className="display-1 mb-3">nuuly wish watcher</h1>
+            <h1 style={styles.headerTextStyles} className="display-1 mb-3">FAQ</h1>
             <h2 style={styles.subtextStyles}>get notified when your nuuly items are in stock</h2>
           </Col>
         </Row>
@@ -96,4 +96,4 @@ const LandingPage: React.FC = () => {
   );
 };
 
-export default LandingPage;
+export default FAQPage;

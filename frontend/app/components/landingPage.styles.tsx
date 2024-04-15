@@ -3,6 +3,7 @@ import { CSSProperties } from 'react';
 
 export const landingPageStyles: CSSProperties = {
   backgroundColor: '#FAF7F4',
+  minHeight: '100vh',
 };
 
 export const headerTextStyles: CSSProperties = {
@@ -22,3 +23,10 @@ export const subtextStyles: CSSProperties = {
     letterSpacing: ".3px",
     lineHeight: "20px"
 }
+
+export const buttonStyles: CSSProperties = {
+  backgroundColor: '#DAB9AE',
+  borderRadius: '15px',
+  border: '1px solid #8E403A',
+  color: '#8E403A',
+};

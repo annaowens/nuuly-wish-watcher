@@ -8,7 +8,6 @@ export const listClass = 'square-list';
 export const buttonContainerClass = 'square-button-container';
 
 export const floatingWatchListStyles: CSSProperties = {
-  backgroundColor: '#DAB9AE',
   borderRadius: '10px',
   padding: '20px',
   border: '1px solid #8E403A',
@@ -16,7 +15,7 @@ export const floatingWatchListStyles: CSSProperties = {
   right: '0',
   flexDirection: 'column',
   position: 'fixed',
-  bottom: '0',
+  top: '200',
   width: '350px',
   overflow: 'hidden',
 };

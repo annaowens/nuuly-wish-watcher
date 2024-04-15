@@ -9,10 +9,13 @@ import WatchButton from './watchButton';
 import SizeSelectorPopup from './sizeSelectorPopup';
 import { Button } from 'react-bootstrap';
 import EndOfResultSuggestion from './endOfResultSuggestion';
+import { searchCardStyles } from './searchResponseCards.styles';
+import WatchedItem from '../../../shared/types/watchList';
+
 
 interface SearchResponseCardsProps {
   searchResponse: Product[];
-  addItemToWatchList: (item: Product) => void;
+  addItemsToWatchList: (watchedItems: WatchedItem[]) => void;
 }
 
 const SearchResponseCards = (props: SearchResponseCardsProps) => {
@@ -30,8 +33,8 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
     setShowPopup(false);
   };
 
-  const addItemToWatchList = () => {
-    if(selectedItem) props.addItemToWatchList(selectedItem);
+  const addItemToWatchList = (items: WatchedItem[]) => {
+    if(selectedItem) props.addItemsToWatchList(items);
   }
 
   return (
@@ -39,7 +42,7 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
       <Row xs={1} md={4} className="g-4">
         {searchResponse.map((product: Product) => (
           <Col key={product.skuId}>
-            <Card>
+            <Card onClick={() => handleOpenPopup(product)} style={searchCardStyles}>
               <Card.Body>
                 <Row>
                   <Image src={product.images[0]} fluid />
@@ -49,8 +52,8 @@ const SearchResponseCards = (props: SearchResponseCardsProps) => {
                     <Card.Title style={{ textAlign: 'left', fontSize: 17 }}>{product.displayName}</Card.Title>
                   </Col>
                   <Col md={3} style={{ paddingLeft: 0 }}>
-                    <Button
-                      onClick={() => handleOpenPopup(product)} />
+                    <WatchButton 
+                      onButtonClick={handleOpenPopup} item={product} />
                   </Col>
                 </Row>
               </Card.Body>

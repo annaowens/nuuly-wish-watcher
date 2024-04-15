@@ -4,28 +4,32 @@ import WatchButton from './watchButton';
 import { Product } from '../../../shared/types/searchResponse';
 import SizeChart from './sizeChart';
 import ProductSizeInventory, { Choice, Size, SizeGroup, IncludedSku } from '../../../shared/types/productSizeInventory';
-import { UniqueSelectionValue } from '../../../shared/types/uniqueSelectionValue';
 import LoadingSpinner from './loadingSpinner';
+import WatchedItem, { UniqueSelectionValue } from '../../../shared/types/watchList'
 
 interface SizeSelectorPopupProps {
   show: boolean;
   selectedItem: Product;
   onClose: () => void;
-  onAdd: (item: Product) => void;
+  onAdd: (items: WatchedItem[]) => void;
 }
 
 const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedItem, onClose, onAdd }) => {
   const [productSizeInventory, setProductSizeInventory] = useState<ProductSizeInventory>();
   const [loading, setLoading] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<UniqueSelectionValue[]>([]);
+  const [selectedValues, setSelectedValues] = useState<WatchedItem[]>([]);
 
   const handleAddToSelection = (color: Choice, group: SizeGroup, sku: IncludedSku) => {
-    var uniqueSelectionValue = getUniqueSelectionValue(color, group, sku);
-    setSelectedValues(prevSelected => [...prevSelected, uniqueSelectionValue]);
+    var watchedItem = getWatchedItem(selectedItem, color, group, sku);
+    setSelectedValues(prevSelected => [...prevSelected, watchedItem]);
   };
 
   const handleClearSelection = () => {
     setSelectedValues([]);
+  }
+
+  const handleWatch = () => {
+    onAdd(selectedValues);
   }
 
   useEffect(() => {
@@ -47,7 +51,7 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
   }, []);
 
   return (
-    <Modal show={show} onHide={onClose} backdrop="static" centered>
+    <Modal show={show} onHide={onClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>select your size(s) for {selectedItem.displayName}</Modal.Title>
       </Modal.Header>
@@ -65,13 +69,14 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={handleClearSelection}>Clear</Button>
-        <WatchButton onButtonClick={onAdd} item={selectedItem} />
+        <WatchButton onButtonClick={handleWatch} item={selectedItem} />
         <div>
-          {selectedValues.map((value: UniqueSelectionValue, index: number) => (
+          {selectedValues.map((value: WatchedItem, index: number) => (
             <div key={index}>
-              {value.colorDisplayName}
-              {value.groupDisplayName}
-              {value.skuDisplayName}
+              {value.productDisplayName}
+              {value.usv.colorDisplayName}
+              {value.usv.groupDisplayName}
+              {value.usv.skuDisplayName}
             </div>
           ))}
         </div>
@@ -80,7 +85,7 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
   );
 };
 
-const getUniqueSelectionValue = (color: Choice, group: SizeGroup, sku: IncludedSku): UniqueSelectionValue => {
+const getWatchedItem = (selectedItem: Product, color: Choice, group: SizeGroup, sku: IncludedSku): WatchedItem => {
   const usv: UniqueSelectionValue = {
     colorCode: color.color.code,
     colorDisplayName: color.color.displayName,
@@ -90,7 +95,13 @@ const getUniqueSelectionValue = (color: Choice, group: SizeGroup, sku: IncludedS
     skuDisplayName: sku.size.displayName
   };
 
-  return usv;
+  const watchedItem: WatchedItem = {
+    productSkuId: selectedItem.skuId,
+    productDisplayName: selectedItem.displayName,
+    usv: usv
+  };
+
+  return watchedItem;
 };
 
 export default SizeSelectorPopup;

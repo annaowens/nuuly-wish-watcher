@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Product } from '../../../shared/types/searchResponse';
-import { iconStyles } from './floatingWatchList.styles';
+import {  } from './floatingWatchList.styles';
 import { Eye } from 'react-bootstrap-icons';
-import { watchButtonStyles } from './watchButton.styles';
+import { watchButtonStyles, iconStyles } from './watchButton.styles';
 
 interface WatchButtonProps {
   item: Product;
@@ -13,13 +13,13 @@ interface WatchButtonProps {
 const WatchButton: React.FC<WatchButtonProps> = ({ item, onButtonClick }) => {
 
   const handleWatchClick = () => {
-    onButtonClick(item);
+      onButtonClick(item);
   };
 
   return (
     <div>
       <Button onClick={handleWatchClick} style={watchButtonStyles}>
-        <Eye size={20} />
+        <Eye size={21} style={iconStyles} />
       </Button>
     </div>
   );
