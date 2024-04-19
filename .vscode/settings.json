@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/ee0dd469-209c-4418-b991-052e311c14c8/resourceGroups/nuuly-wish-watcher/providers/Microsoft.Web/sites/nuuly-wish-watcher",
+    "appService.deploySubpath": "."
+}

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Eye } from 'react-bootstrap-icons';
-import WatchedItem from '../../../shared/types/watchList';
+import UniqueSelectionValue from '../../../shared/types/uniqueSelectionValue';
+import WatchList from '../../../shared/objects/watchedItem';
 
 interface WatchListCartProps {
-    watchedItems: WatchedItem[];
+    watchedItems: WatchList;
     clearWatchList: () => void;
 }
 
@@ -20,16 +21,16 @@ const WatchListCart: React.FC<WatchListCartProps> = ({
     return (
         <div style={styles.shoppingCart}>
             <div style={styles.cartHeader}>
-                <h4 style={{ margin: 0 }}>Shopping Cart</h4>
+                <h4 style={{ margin: 0 }}>watchlist</h4>
             </div>
             <div style={styles.cartItems}>
                 <ul style={styles.listStyles}>
-                    {watchedItems.map((item: WatchedItem) => (
-                        <li key={item.productSkuId}>
-                            {item.productDisplayName}
+                    {[...watchedItems].map((item) => (
+                        <li key={item.usv.productChoiceId}>
+                            {item.usv.productDisplayName}
                             {item.usv.colorDisplayName}
-                            {item.usv.groupDisplayName}
-                            {item.usv.skuDisplayName}
+                            {item.usv.sizeCode}
+                            {item.usv.sizeDisplayName}
                         </li>
                     ))}
                 </ul>

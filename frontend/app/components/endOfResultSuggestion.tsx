@@ -16,7 +16,7 @@ const EndOfResultSuggestion: React.FC = () => {
         <Container className="m-5">
             <Row>
                 <Col>
-                    <h1 style={styles.subtextStyles}>didn't find what you were looking for? try a more specific search. exact product name is best :) </h1>
+                    <h1 style={styles.subtextStyles}>didn&apos;t find what you were looking for? try a more specific search. exact product name is best :) </h1>
                     <Button style={styles.buttonStyles} className="rounded-pill" variant="outline-primary" onClick={scrollToTop}>
                         back to top
                     </Button>

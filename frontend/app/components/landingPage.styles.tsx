@@ -21,7 +21,8 @@ export const subtextStyles: CSSProperties = {
     fontSize: "1.2rem",
     fontWeight: 400,
     letterSpacing: ".3px",
-    lineHeight: "20px"
+    lineHeight: "20px",
+    // TODO: make this wrap on smaller screens
 }
 
 export const buttonStyles: CSSProperties = {

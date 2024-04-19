@@ -12,27 +12,35 @@ import LoadingSpinner from './loadingSpinner';
 import * as styles from './landingPage.styles';
 import NavBar from './navBar';
 import WatchListCart from './watchListCart';
-import WatchedItem from '../../../shared/types/watchList';
 import SearchResponseCards from './searchResponseCards';
+import UniqueSelectionValue from '../../../shared/types/uniqueSelectionValue';
+import WatchList, { WatchedItem } from '../../../shared/objects/watchedItem'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const LandingPage: React.FC = () => {
-  const [watchedItems, setWatchedItems] = useState<WatchedItem[]>([]);
+  const [watchedItems, setWatchedItems] = useState<WatchList>(new WatchList());
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   // Function to update the state
-  const addItemsToWatchList = (newlyWatchedItems: WatchedItem[]) => {
-    setWatchedItems([...watchedItems, ...newlyWatchedItems]);
+  const addItemsToWatchList = (newlyWatchedItems: UniqueSelectionValue[]) => {
+    newlyWatchedItems.forEach((item: UniqueSelectionValue) => {
+      var wi = new WatchedItem(item);
+      watchedItems.addItemToWatchList(wi);
+      console.log(watchedItems.usvs);
+    });
+    setWatchedItems(watchedItems);
     setExpanded(true);
   };
 
   const toggleWatchList = () => {
-      setExpanded((prevExpanded) => !prevExpanded);
+    setExpanded((prevExpanded) => !prevExpanded);
   }
 
   const clearWatchList = () => {
-    setWatchedItems([]);
+    setWatchedItems(new WatchList());
   }
 
   useEffect(() => {
@@ -78,7 +86,7 @@ const LandingPage: React.FC = () => {
             <SearchBar onSearch={onSearch} />
             <Row>
               <Col xs={12} className="text-center mt-4">
-                {loading ? (
+                {/* {loading ? (
                   <LoadingSpinner />
                 ) : (
                   searchResponse?.products &&
@@ -86,7 +94,11 @@ const LandingPage: React.FC = () => {
                     searchResponse={searchResponse?.products || []}
                     addItemsToWatchList={addItemsToWatchList}
                   />
-                )}
+                )} */}
+                  <SearchResponseCards
+                    searchResponse={searchResponse}
+                    addItemsToWatchList={addItemsToWatchList}
+                  />
               </Col>
             </Row>
           </Col>

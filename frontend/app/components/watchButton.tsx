@@ -18,7 +18,7 @@ const WatchButton: React.FC<WatchButtonProps> = ({ item, onButtonClick }) => {
 
   return (
     <div>
-      <Button onClick={handleWatchClick} style={watchButtonStyles}>
+      <Button onClick={handleWatchClick} style={watchButtonStyles} className="rounded-circle">
         <Eye size={21} style={iconStyles} />
       </Button>
     </div>

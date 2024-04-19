@@ -12,17 +12,17 @@ import LoadingSpinner from './loadingSpinner';
 import * as styles from './landingPage.styles';
 import NavBar from './navBar';
 import WatchListCart from './watchListCart';
-import WatchedItem from '../../../shared/types/watchList';
+import UniqueSelectionValue from '../../../shared/types/uniqueSelectionValue';
 import SearchResponseCards from './searchResponseCards';
 
 const FAQPage: React.FC = () => {
-  const [watchedItems, setWatchedItems] = useState<WatchedItem[]>([]);
+  const [watchedItems, setWatchedItems] = useState<UniqueSelectionValue[]>([]);
   const [searchResponse, setSearchResponse] = useState<SearchResponse>();
   const [loading, setLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   // Function to update the state
-  const addItemsToWatchList = (newlyWatchedItems: WatchedItem[]) => {
+  const addItemsToWatchList = (newlyWatchedItems: UniqueSelectionValue[]) => {
     setWatchedItems([...watchedItems, ...newlyWatchedItems]);
     setExpanded(true);
   };
@@ -65,7 +65,6 @@ const FAQPage: React.FC = () => {
   return (
     <div style={styles.landingPageStyles}>
       <NavBar toggleWatchList={toggleWatchList}></NavBar>
-      {expanded && <WatchListCart watchedItems={watchedItems} clearWatchList={clearWatchList} />}
       <Container style={styles.landingPageStyles} fluid className="pt-24 justify-content-center align-items-center">
         <Row className="justify-content-center">
           <Col md={9} className="text-center">
@@ -78,7 +77,7 @@ const FAQPage: React.FC = () => {
             <SearchBar onSearch={onSearch} />
             <Row>
               <Col xs={12} className="text-center mt-4">
-                {loading ? (
+                {/* {loading ? (
                   <LoadingSpinner />
                 ) : (
                   searchResponse?.products &&
@@ -86,7 +85,7 @@ const FAQPage: React.FC = () => {
                     searchResponse={searchResponse?.products || []}
                     addItemsToWatchList={addItemsToWatchList}
                   />
-                )}
+                )} */}
               </Col>
             </Row>
           </Col>

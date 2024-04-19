@@ -5,19 +5,19 @@ import { Product } from '../../../shared/types/searchResponse';
 import SizeChart from './sizeChart';
 import ProductSizeInventory, { Choice, Size, SizeGroup, IncludedSku } from '../../../shared/types/productSizeInventory';
 import LoadingSpinner from './loadingSpinner';
-import WatchedItem, { UniqueSelectionValue } from '../../../shared/types/watchList'
+import UniqueSelectionValue from '../../../shared/types/uniqueSelectionValue'
 
 interface SizeSelectorPopupProps {
   show: boolean;
   selectedItem: Product;
   onClose: () => void;
-  onAdd: (items: WatchedItem[]) => void;
+  onAdd: (items: UniqueSelectionValue[]) => void;
 }
 
 const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedItem, onClose, onAdd }) => {
   const [productSizeInventory, setProductSizeInventory] = useState<ProductSizeInventory>();
   const [loading, setLoading] = useState(false);
-  const [selectedValues, setSelectedValues] = useState<WatchedItem[]>([]);
+  const [selectedValues, setSelectedValues] = useState<UniqueSelectionValue[]>([]);
 
   const handleAddToSelection = (color: Choice, group: SizeGroup, sku: IncludedSku) => {
     var watchedItem = getWatchedItem(selectedItem, color, group, sku);
@@ -60,7 +60,7 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
           <LoadingSpinner />
         ) : (
           productSizeInventory?.choices.map((colorOption: Choice) => (
-            <div>
+            <div key={colorOption.color.code}>
               <p>{colorOption.color.displayName.toLocaleLowerCase()}</p>
               <SizeChart color={colorOption} sizeGroups={colorOption.sizeGroups} handleAddToSelection={handleAddToSelection} />
             </div>
@@ -71,12 +71,12 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
         <Button onClick={handleClearSelection}>Clear</Button>
         <WatchButton onButtonClick={handleWatch} item={selectedItem} />
         <div>
-          {selectedValues.map((value: WatchedItem, index: number) => (
+          {selectedValues.map((value: UniqueSelectionValue, index: number) => (
             <div key={index}>
               {value.productDisplayName}
-              {value.usv.colorDisplayName}
-              {value.usv.groupDisplayName}
-              {value.usv.skuDisplayName}
+              {value.colorDisplayName}
+              {value.groupDisplayName}
+              {value.sizeDisplayName}
             </div>
           ))}
         </div>
@@ -85,23 +85,18 @@ const SizeSelectorPopup: React.FC<SizeSelectorPopupProps> = ({ show, selectedIte
   );
 };
 
-const getWatchedItem = (selectedItem: Product, color: Choice, group: SizeGroup, sku: IncludedSku): WatchedItem => {
+const getWatchedItem = (selectedItem: Product, color: Choice, group: SizeGroup, sku: IncludedSku): UniqueSelectionValue => {
   const usv: UniqueSelectionValue = {
-    colorCode: color.color.code,
+    productChoiceId: selectedItem.choiceId,
+    productDisplayName: selectedItem.displayName,
     colorDisplayName: color.color.displayName,
     groupCode: group.groupCode,
     groupDisplayName: group.displayName,
-    skuCode: sku.skuCode,
-    skuDisplayName: sku.size.displayName
+    sizeCode: sku.size.code,
+    sizeDisplayName: sku.size.displayName
   };
 
-  const watchedItem: WatchedItem = {
-    productSkuId: selectedItem.skuId,
-    productDisplayName: selectedItem.displayName,
-    usv: usv
-  };
-
-  return watchedItem;
+  return usv;
 };
 
 export default SizeSelectorPopup;
